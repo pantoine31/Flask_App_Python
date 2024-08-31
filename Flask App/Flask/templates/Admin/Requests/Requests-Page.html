@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Σελίδα Αιτημάτων</title>
+    <style>
+        /* Στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Ανοιχτό γκρι φόντο */
+            color: #212529; /* Σκούρο γκρι για κείμενο */
+        }
+
+        /* Στυλ για την navbar */
+        .navbar {
+            background-color: #343a40 !important; /* Σκούρο γκρι φόντο navbar */
+        }
+
+        /* Στυλ για τα στοιχεία της navbar */
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Απόσταση μεταξύ των στοιχείων */
+        }
+
+        /* Στυλ για τους συνδέσμους της navbar */
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important; /* Λευκό χρώμα για τους συνδέσμους */
+            font-size: 1rem; /* Μέγεθος γραμματοσειράς */
+            padding: 15px 20px; /* Απόσταση γύρω από το κείμενο */
+        }
+
+        /* Στυλ για την ενεργή κατάσταση του συνδέσμου */
+        .navbar-nav .nav-link.active {
+            background-color: #007bff; /* Μπλε χρώμα φόντου για την ενεργή κατάσταση */
+            border-radius: 5px; /* Στρογγυλεμένες γωνίες */
+        }
+
+        /* Στυλ για τα dropdowns */
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40; /* Σκούρο γκρι φόντο για το μενού */
+            border: none; /* Αφαίρεση συνόρων */
+        }
+
+        /* Στυλ για τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa; /* Λευκό χρώμα κειμένου */
+        }
+
+        /* Στυλ για το hover πάνω από τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057; /* Ελαφρώς πιο ανοιχτό γκρι χρώμα φόντου */
+        }
+
+        /* Στυλ για το κύριο τίτλο */
+        h1 {
+            text-align: center;
+            color: #007bff; /* Χρώμα τίτλου σε μπλε */
+            margin-top: 50px;
+            font-size: 2.5rem;
+        }
+
+        /* Ρυθμίσεις για το κεντρικό container */
+        .container {
+            padding: 30px;
+        }
+
+        /* Ρυθμίσεις για τα περιθώρια γύρω από τον τίτλο */
+        .container h1 {
+            margin-bottom: 30px;
+        }
+
+        /* Στυλ για τις οδηγίες διαχειριστή */
+        .admin-guidelines {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-guidelines h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .admin-guidelines ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .admin-guidelines ul li {
+            margin-bottom: 10px;
+        }
+
+        .admin-guidelines ul li::before {
+            content: "\f058";
+            font-family: 'FontAwesome';
+            color: #007bff;
+            margin-right: 10px;
+        }
+
+        /* Στυλ για τον πίνακα αιτήσεων */
+        .table-responsive {
+            margin-top: 30px;
+        }
+
+        .table thead {
+            background-color: #343a40; /* Σκούρο γκρι φόντο για το κεφαλάρι του πίνακα */
+            color: #f8f9fa; /* Λευκό χρώμα για το κείμενο του κεφαλαριού */
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1; /* Ελαφρύ γκρι φόντο κατά το hover σε γραμμή του πίνακα */
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="FitLife" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0) }}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item" href="{{ url_for('getPrograms') }}">Πρόγραμμα</a>
+                            <a class="dropdown-item" href="{{ url_for('getClasses') }}">Πρόγραμμα Τάξεων</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flash-container" id="message" style="display: none;">
+        {% with messages = get_flashed_messages(category_filter=['accepted', 'declined']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(category_filter=['error']) %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="container">
+        <h1>Αιτήσεις Εγγραφών</h1>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Αριθμός Αίτησης</th>
+                        <th>Όνομα</th>
+                        <th>Επώνυμο</th>
+                        <th>Ημερομηνία Αίτησης</th>
+                        <th>Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in data %}
+                        <tr>
+                            <td>{{ req['name'] | default('N/A') }}</td>
+                            <td>{{ req['surname'] | default('N/A') }}</td>
+                            <td>{{ req['email'] | default('N/A') }}</td>
+                            <td>{{ req['address'] | default('N/A') }}</td>
+                            <td>
+                                <!-- Go to edit user form with specific email -->
+                                <a href="{{ url_for('oneUser', email=req['email']) }}" class="btn btn-success btn-sm">Αποδοχή</a> 
+                                <!-- Decline user request with specific email -->
+                                <a href="{{ url_for('decline', email=req['email']) }}" class="btn btn-danger btn-sm">Απόρριψη</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

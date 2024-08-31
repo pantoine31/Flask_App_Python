@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Classes-Page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='NavBar.css') }}">
+    <title>Σελίδα Τάξεων</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        .flash-container {
+            margin: 20px;
+        }
+
+        .flash-message {
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #e2e3e5;
+            color: #000;
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .flash-message p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 10px;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .new-button {
+            text-align: center;
+        }
+
+        .new-button a {
+            font-size: 1rem;
+        }
+
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .table {
+            margin-top: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .table thead {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        .table tbody tr {
+            background-color: #f8f9fa;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .table td, .table th {
+            vertical-align: middle;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'adminlogin' }}" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'getRequests' }}" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'getUserList' }}" href="{{ url_for('getUserList', flag=0) }}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ 'active' if request.endpoint in ['getAnnouncements', 'getOffers'] }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getAnnouncements' }}" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getOffers' }}" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ 'active' if request.endpoint in ['getTrainers', 'getPrograms', 'getClasses'] }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getTrainers' }}" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getPrograms' }}" href="{{ url_for('getPrograms') }}">Προγράμματα Γυμναστηρίου</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getClasses' }}" href="{{ url_for('getClasses') }}">Πρόγραμμα Τάξεων</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flash-container" id="message" style="display: none;">
+        {% with messages = get_flashed_messages(category_filter=['deleteclass', 'editclass', 'addedclass', 'nonexistantcls', 'refresh_class']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashContainer = document.getElementById('message');
+            
+            if (flashContainer && flashContainer.children.length > 0) {
+                flashContainer.style.display = 'block';
+    
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(category_filter=['emptydb']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="new-button mt-3 mb-2">
+        <a href="{{ url_for('new_class') }}" class="btn btn-success btn-sm">Δημιουργία</a>
+    </div>
+
+    <div class="new-button mt-3 mb-2">
+        <h1>Πίνακας Τάξεων</h1>
+    </div>
+
+    {% if data %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Program</th>
+                        <th scope="col">Day</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Max People</th>
+                        <th scope="col">Available Spots</th>
+                        <th scope="col" style="width: 300px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in data %}
+                        <tr>
+                            <td>{{ req['class_id'] | default('N/A') }}</td>
+                            <td>{{ req['program'] | default('N/A') }}</td>
+                            <td>{{ req['day'] | default('N/A') }}</td>
+                            <td>{{ req['time'] | default('N/A') }}</td>
+                            <td>{{ req['type'] | default('N/A') }}</td>
+                            <td>{{ req['max_people'] | default('N/A') }}</td>
+                            <td>{{ req['availablespots'] | default('N/A') }}</td>
+                            <td>
+                                <a href="{{ url_for('editClass', class_id=req['class_id']) }}" class="btn btn-success btn-sm">Ενημέρωση</a>
+                                <a href="{{ url_for('delete_class', class_id=req['class_id']) }}" class="btn btn-danger btn-sm">Διαγραφή</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Programs</th>
+                        <th scope="col">Biography</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col" style="width: 300px;">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    {% endif %}
+</body>
+</html>

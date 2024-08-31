@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Login-Page.css') }}">
+    <title>Σελίδα Σύνδεσης Διαχειριστή</title>
+    <style>
+        body {
+            background-color: #f4f7f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #login {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        #login h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #login img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        #login .flash-message {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        #login .flash-message.alert {
+            border: none;
+            color: #721c24;
+            background-color: #f8d7da;
+        }
+
+        #login .notice {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+            border-color: #ced4da;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        #backtoblog a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 0.9rem;
+        }
+
+        #backtoblog a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="login">
+        <h1>
+            <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="180" height="150">
+        </h1>
+
+        <!-- Flash messages for login errors -->
+        {% with messages = get_flashed_messages(category_filter=['wronglogin']) %}
+            {% if messages %}
+                <div id="login-error" class="flash-message alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div id="login-message" class="notice">Έχετε αποσυνδεθεί</div>
+        
+        <form name="loginform" id="loginform" action="{{ url_for('adminlogin') }}" method="POST">
+            <div class="form-group">
+                <label for="admin_login">Ψευδώνυμο</label>
+                <input type="text" name="username" id="admin_login" class="form-control" value="" size="20" autocapitalize="off" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+                <label for="user_pass">Συνθηματικό</label>
+                <input type="password" name="password" id="user_pass" class="form-control" size="20" autocomplete="current-password" spellcheck="false" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-primary btn-block" value="Σύνδεση">
+            </div>
+        </form>
+        <p id="backtoblog">
+            <a href="{{ url_for('mainpage') }}">Επιστροφη</a>
+        </p>
+    </div>
+</body>
+</html>

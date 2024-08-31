@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Main-Page.css') }}">
+    <title>Κρατήσεις</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .flash-container {
+            margin-top: 20px;
+        }
+
+        .flash-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .flash-message p {
+            margin: 0;
+        }
+
+        .bottom_notes {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #495057;
+        }
+
+        .bottom_notes a {
+            color: #f8f9fa;
+        }
+
+        .bottom_notes a:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-section {
+            background-color: #e9ecef;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            color: #343a40;
+        }
+
+        .welcome-section p {
+            font-size: 1.25rem;
+            color: #495057;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #343a40;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+            white-space: nowrap;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3; /* Μπλε χρώμα για το hover εφέ */
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff; /* Μπλε χρώμα για το ενεργό στοιχείο */
+            color: #fff !important; /* Διασφαλίζει ότι το κείμενο παραμένει λευκό */
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="d-flex align-items-center justify-content-between bg-dark py-2">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="{{ url_for('userlogin') }}">
+                <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="EnerCharge" width="180" height="60">
+            </a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogin' }}" href="{{ url_for('userlogin') }}">Αρχική</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userbrowse' }}" href="{{ url_for('userbrowse') }}">Υπηρεσίες</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'formBook' }}" href="{{ url_for('formBook') }}">Κράτηση</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'annBrowse' }}" href="{{ url_for('annBrowse') }}">Ανακοινώσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'offBrowse' }}" href="{{ url_for('offBrowse') }}">Προσφορές</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'myAppointments' }}" href="{{ url_for('myAppointments') }}">Κρατήσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'older' }}" href="{{ url_for('older') }}">Ιστορικό Κρατήσεων</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogout' }}" href="{{ url_for('userlogout') }}">Έξοδος</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="flash-container" id="message" style="display: none;">
+        {% with messages = get_flashed_messages(category_filter=['denied', 'nospots', 'prevdate']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashContainer = document.getElementById('message');
+            
+            if (flashContainer && flashContainer.children.length > 0) {
+                flashContainer.style.display = 'block';
+    
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+
+    <div class="container content">
+        <h1>Book Appointment</h1>
+        <!-- HTML 2 - Προσθήκη επιλεγμένων ωρών στην υπάρχουσα φόρμα -->
+        <form action="{{ url_for('showtimes') }}" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="available_classes">Select Class:</label>
+                    <select name="available_classes" id="available_classes" class="form-control">
+                        {% for available_class in available_classes %}
+                            <option value="{{ available_class }}">{{ available_class }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Enter Date (yyyy-mm-dd):</label>
+                    <input type="date" name="date" id="date" class="form-control" placeholder="yyyy-mm-dd" required>
+                </div>
+                
+                <div class="form-group text-center">
+                    <input type="submit" value="Check Available Times" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+
+
+        {% if available_times %}
+            <div class="form-container">
+                <h3>Available Times:</h3>
+                <ul class="list-group">
+                    {% for time in available_times %}
+                        <li class="list-group-item">{{ time }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="bottom_notes">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ url_for('userlogin') }}">
+                        <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="80" height="30">
+                    </a>
+                    <br><br>
+                    <p>© 2013-2024 KreouzisGYM. All rights reserved.</p>					
+                    <p>• Τηλέφωνο Επικοινωνίας: 696969</p>
+                    <p>• Email: info@kreouzis.gr</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

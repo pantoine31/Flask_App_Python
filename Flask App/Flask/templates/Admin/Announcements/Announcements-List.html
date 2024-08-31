@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Σελίδα Ανακοινώσεων</title>
+    <style>
+        /* Στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Ανοιχτό γκρι φόντο */
+            color: #212529; /* Σκούρο γκρι για κείμενο */
+        }
+
+        /* Στυλ για την navbar */
+        .navbar {
+            background-color: #343a40 !important; /* Σκούρο γκρι φόντο navbar */
+        }
+
+        /* Στυλ για τα στοιχεία της navbar */
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Απόσταση μεταξύ των στοιχείων */
+        }
+
+        /* Στυλ για τους συνδέσμους της navbar */
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important; /* Λευκό χρώμα για τους συνδέσμους */
+            font-size: 1rem; /* Μέγεθος γραμματοσειράς */
+            padding: 15px 20px; /* Απόσταση γύρω από το κείμενο */
+        }
+
+        /* Στυλ για την ενεργή κατάσταση του συνδέσμου */
+        .navbar-nav .nav-link.active {
+            background-color: #007bff; /* Μπλε χρώμα φόντου για την ενεργή κατάσταση */
+            border-radius: 5px; /* Στρογγυλεμένες γωνίες */
+        }
+
+        /* Στυλ για τα dropdowns */
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40; /* Σκούρο γκρι φόντο για το μενού */
+            border: none; /* Αφαίρεση συνόρων */
+        }
+
+        /* Στυλ για τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa; /* Λευκό χρώμα κειμένου */
+        }
+
+        /* Στυλ για το hover πάνω από τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057; /* Ελαφρώς πιο ανοιχτό γκρι χρώμα φόντου */
+        }
+
+        /* Στυλ για το κύριο τίτλο */
+        h1 {
+            text-align: center;
+            color: #007bff; /* Χρώμα τίτλου σε μπλε */
+            margin-top: 30px;
+            font-size: 2rem;
+        }
+
+        /* Στυλ για τις ειδοποιήσεις (flash messages) */
+        .flash-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff3cd; /* Κίτρινο φόντο για ειδοποιήσεις */
+            border: 1px solid #ffeeba;
+            border-radius: 5px;
+        }
+
+        .flash-message p {
+            margin: 0;
+            font-weight: bold;
+            color: #856404; /* Σκούρο κίτρινο για το κείμενο */
+        }
+
+        /* Στυλ για τα κουμπιά */
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%; /* Πλήρες πλάτος */
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Στυλ για τον πίνακα */
+        .table-responsive {
+            margin-top: 30px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .table th {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        /* Στυλ για το κουμπί δημιουργίας νέας ανακοίνωσης */
+        .new-button {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .new-button a {
+            display: block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGym" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0)}}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item" href="{{ url_for('getPrograms') }}">Προγράμματα Γυμναστηρίου</a>
+                            <a class="dropdown-item" href="{{ url_for('getClasses') }}">Πρόγραμμα Τάξεων</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flash-container" id="message" style="display: none;">
+        {% with messages = get_flashed_messages(category_filter=['deleteann', 'editann', 'addedann', 'nonexistantann']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashContainer = document.getElementById('message');
+            
+            // Εάν υπάρχει το flash message
+            if (flashContainer && flashContainer.children.length > 0) {
+                // Εμφανίστε το div
+                flashContainer.style.display = 'block';
+    
+                // Εξαφανίστε το flash message μετά από 5 δευτερόλεπτα
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(category_filter=['emptydb']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div> 
+    <div class="new-button">
+        <a href="{{ url_for('new_announcement') }}" class="btn btn-success btn-sm">Δημιουργία</a>
+    </div>
+    <div class="new-button mt-3 mb-2">
+        <h1>Πίνακας Ανακοινώσεων</h1>
+    </div>   
+    {% if data %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Text</th>
+                        <th scope="col" style="width: 300px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in data %}
+                        <tr>
+                            <td>{{ req['ann_id'] | default('N/A') }}</td>
+                            <td>{{ req['title'] | default('N/A') }}</td>
+                            <td>{{ req['text'] | default('N/A') }}</td>
+                            <td>
+                                <a href="{{ url_for('editAnnouncement', ann_id=req['ann_id']) }}" class="btn btn-success btn-sm">Ενημέρωση</a>
+                                <a href="{{ url_for('delete_announcement', ann_id=req['ann_id']) }}" class="btn btn-danger btn-sm">Διαγραφή</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Text</th>
+                        <th scope="col" style="width: 300px;">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    {% endif %}
+</body>
+</html>

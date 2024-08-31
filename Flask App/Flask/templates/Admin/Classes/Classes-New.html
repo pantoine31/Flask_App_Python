@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Classes-Page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='NavBar.css') }}">
+    <title>Σελίδα δημιουργία τάξεων</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+
+        .navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            box-shadow: none;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 10px;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .btn {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0)}}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ 'active' if request.endpoint in ['getAnnouncements', 'getOffers'] }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getAnnouncements' }}" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getOffers' }}" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ 'active' if request.endpoint in ['getTrainers', 'getPrograms', 'getClasses'] }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getTrainers' }}" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getPrograms' }}" href="{{ url_for('getPrograms') }}">Προγράμματα Γυμναστηρίου</a>
+                            <a class="dropdown-item {{ 'active' if request.endpoint == 'getClasses' }}" href="{{ url_for('getClasses') }}">Πρόγραμμα Τάξεων</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Δημιουργία Νέας Τάξης</h2>
+        <form action="{{ url_for('create_class') }}" method="post">
+            <div class="form-group">
+                <label for="program">Προγραμμα:</label>
+                <input type="text" class="form-control" id="program" name="program" required>
+            </div>
+            <div class="form-group">
+                <label for="day">Ημερα:</label>
+                <input type="text" class="form-control" id="day" name="day" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Ωρα:</label>
+                <input type="text" class="form-control" id="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label for="type">Τύπος Τάξης:</label>
+                <select class="form-control" id="type" name="type" required>
+                    <option value="" hidden>Επιλέξτε τύπο τάξης</option>
+                    <option value="solo">Ατομικό</option>             
+                    <option value="group">Ομαδικό</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="max_people">Μεγιστος αριθμος ατομων:</label>
+                <input type="number" class="form-control" id="max_people" name="max_people" required>
+            </div>
+            <div class="form-group">
+                <label for="availablespots">Ελευθερες θεσεις:</label>
+                <input type="number" class="form-control" id="availablespots" name="availablespots" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-success" value="Αποθήκευση Αλλαγών">
+                <a href="{{ url_for('getClasses') }}" class="btn btn-danger">Ακύρωση</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

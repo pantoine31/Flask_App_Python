@@ -1,0 +1,13 @@
+[{
+  "_id": {
+    "$oid": "66cf35faaa92eab232a69a1e"
+  },
+  "app_id": "1",
+  "class_name": "pilates",
+  "date": "28/8/2024",
+  "time": "12:00",
+  "day": "Wednesday",
+  "user_id": "2",
+  "type": "group",
+  "class_id": "1"
+}]

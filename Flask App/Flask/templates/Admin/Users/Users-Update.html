@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Σελίδα ανανέωσης χρηστών</title>
+    <style>
+        /* Γενικό στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Στυλ για την navbar */
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        /* Στυλ για τα flash messages */
+        .flash-container {
+            margin: 20px;
+        }
+
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .flash-message.flash-warning {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Στυλ για τον τίτλο της φόρμας */
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        /* Στυλ για τη φόρμα */
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .form-group label {
+            color: #495057;
+        }
+
+        .form-group input, .form-group select {
+            border-radius: 5px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        /* Στυλ για τα κουμπιά */
+        .btn {
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0) }}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item" href="{{ url_for('getPrograms') }}">Υπηρεσίες</a>
+                            <a class="dropdown-item" href="{{ url_for('getClasses') }}">Πρόγραμμα Ομαδικών</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Ενημέρωση Χρήστη</h2>
+        <form id="updateuser" action="{{ url_for('update_user', user_id=req['user_id']) }}" method="post">
+            <div class="form-group">
+                <label for="user_id">ID Χρήστη:</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" value="{{ data[0]['user_id'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Όνομα Χρήστη:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ data[0]['name'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Επώνυμο χρήστη:</label>
+                <input type="text" class="form-control" id="surname" name="surname" value="{{ data[0]['surname'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email χρήστη:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ data[0]['email'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Χώρα Κατοικίας χρήστη:</label>
+                <select class="form-control" id="country" name="country" required>
+                    <option value="{{ data[0]['country'] }}">{{ data[0]['country'] }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="town">Πόλη Κατοικίας χρήστη:</label>
+                <select class="form-control" id="town" name="town" required>
+                    <option value="{{ data[0]['town'] }}">{{ data[0]['town'] }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="address">Διεύθυνση Κατοικίας χρήστη:</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ data[0]['address'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ data[0]['username'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="text" class="form-control" id="password" name="password" value="{{ data[0]['password'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Ρόλος χρήστη:</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="{{ data[0]['role'] }}" hidden>{{ data[0]['role'] }}</option>
+                    <option value="user">Χρήστης</option>             
+                    <option value="admin">Διαχειριστής</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-success" value="Αποθήκευση Αλλαγών">
+                <a href="{{ url_for('getUserList', flag=0) }}" class="btn btn-danger">Ακύρωση</a>
+            </div>
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Load all countries when page is loaded
+                loadCountries();
+        
+                // When Country changes load new cities
+                $('#country').change(function () {
+                    loadCities($(this).val());
+                });
+        
+                // Function for loading Countries
+                function loadCountries() {
+                    $.ajax({
+                        url: '/api/countries',
+                        method: 'GET', 
+                        success: function (data) {
+                            console.log(data);
+                            // for each country found insert an option to the dropdown select menu
+                            $.each(data, function (key, value) {
+                                $('#country').append('<option value="' + String(value) + '">' + String(value) + '</option>');
+                            });
+        
+                            // load cities for the specific country
+                            loadCities($('#country').val());
+                        },
+                        error: function () {
+                            console.log('Error loading countries.');
+                        }
+                    });
+                }
+        
+                // Function for loading Cities of specific country
+                function loadCities(country) {
+                    $.ajax({
+                        url: '/api/cities/' + country,
+                        method: 'GET',
+                        success: function (data) {
+                            // Refresh Cities List
+                            $('#town').empty();
+                            
+                            // for each city found insert an option to the dropdown select menu
+                            data.forEach(function (value) {
+                                $('#town').append('<option value="' + String(value) + '">' + String(value) + '</option>');
+                            });
+                        },
+                        error: function () {
+                            console.log('Error loading cities for country: ' + country);
+                        }
+                    });
+                }
+                
+                $('#updateuser').submit(function (e) {
+                    e.preventDefault();  // Prevent form action
+
+                    // Create FormData object and append form data
+                    var formData = new FormData(this);
+
+                    // Optionally, you can add extra data to the FormData object
+                    var user_id = window.location.pathname.split('/').pop();
+                    formData.append('user_id', user_id);
+
+                    // Perform the AJAX request to update the user
+                    $.ajax({
+                        url: '/updateuser/' + user_id,
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // Handle success response, if needed
+                            console.log('User updated successfully.');
+
+                            // Optionally, you can redirect to the user list page
+                            window.location.href = "{{ url_for('getUserList', flag=0) }}";
+                        },
+                        error: function () {
+                            console.log('Error updating user.');
+                        }
+                    });
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "66ceee41c956997ce50b4c40"
+  },
+  "class_id": "1",
+  "program": "pilates",
+  "day": "Wednesday",
+  "time": "12:00",
+  "type": "group",
+  "max_people": "100",
+  "availablespots": 97
+}]

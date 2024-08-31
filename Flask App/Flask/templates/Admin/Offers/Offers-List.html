@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Offers-Page.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='NavBar.css') }}">
+    <title>Σελίδα Προσφορών</title>
+    <style>
+        /* Γενικό στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Στυλ για την navbar */
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        /* Στυλ για τα flash messages */
+        .flash-container {
+            margin: 20px;
+        }
+
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .flash-message.flash-warning {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Στυλ για τα κουμπιά */
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        /* Στυλ για τη φόρμα και τις γενικές ενότητες */
+        h1, h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .new-button {
+            margin: 20px 0;
+        }
+
+        /* Στυλ για τον πίνακα */
+        .table thead th {
+            background-color: #343a40;
+            color: #f8f9fa;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #e9ecef;
+        }
+
+        .table tbody tr:hover {
+            background-color: #ced4da;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0) }}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item" href="{{ url_for('getPrograms') }}">Προγράμματα Γυμναστηρίου </a>
+                            <a class="dropdown-item" href="{{ url_for('getClasses') }}">Πρόγραμμα Τάξεων</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flash-container" id="message" style="display: none;">
+        {% with messages = get_flashed_messages(category_filter=['deleteoffer', 'editoffer', 'addedoffer', 'nonexistantoff']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var flashContainer = document.getElementById('message');
+            
+            // Εάν υπάρχει το flash message
+            if (flashContainer && flashContainer.children.length > 0) {
+                // Εμφανίστε το div
+                flashContainer.style.display = 'block';
+    
+                // Εξαφανίστε το flash message μετά από 5 δευτερόλεπτα
+                setTimeout(function() {
+                    flashContainer.style.display = 'none';
+                }, 5000);
+            }
+        });
+    </script>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(category_filter=['emptydb']) %}
+            {% if messages %}
+                <div class="flash-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+    </div> 
+
+    <div class="new-button mt-3 mb-2">
+        <a href="{{ url_for('new_offer') }}" class="btn btn-success btn-sm">Δημιουργία</a><br>
+    </div>
+
+    <div class="new-button mt-3 mb-2">
+        <h1>Πίνακας Προσφορών</h1>
+    </div>
+
+    {% if data %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Τίτλος</th>
+                        <th scope="col">Κείμενο</th>
+                        <th scope="col" style="width: 300px;">Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in data %}
+                        <tr>
+                            <td>{{ req['offer_id'] | default('N/A') }}</td>
+                            <td>{{ req['title'] | default('N/A') }}</td>
+                            <td>{{ req['text'][:80] + '...' | default('N/A') }}</td>
+                            <td>
+                                <a href="{{ url_for('editOffer', offer_id=req['offer_id']) }}" class="btn btn-success btn-sm">Ενημέρωση</a>
+                                <a href="{{ url_for('delete_offer', offer_id=req['offer_id']) }}" class="btn btn-danger btn-sm">Διαγραφή</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Τίτλος</th>
+                        <th scope="col">Κείμενο</th>
+                        <th scope="col" style="width: 300px;">Ενέργειες</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    {% endif %}
+</body>
+</html>

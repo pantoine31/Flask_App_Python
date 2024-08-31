@@ -1,0 +1,24 @@
+body {
+    background: #c7c7c7;
+    min-width: 0;
+    color: #3c434a;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.dropdown-menu {
+    background-color: #343a40;
+    
+}
+.dropdown-item {
+    color: rgba(255,255,255,.5);
+}
+.dropdown-item:hover {
+    background-color: #343a40;
+    color: rgba(255, 255, 255, 0.671);
+}
+.nav-item {
+    font-size: 150%;
+    margin-right: 20px;
+}

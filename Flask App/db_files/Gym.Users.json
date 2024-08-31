@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "66ca0305f1da10f706bd4092"
+  },
+  "name": "a",
+  "surname": "a",
+  "country": "Afghanistan",
+  "town": "Herat",
+  "email": "a1@a.com",
+  "address": "asd",
+  "username": "a",
+  "password": "1",
+  "role": "admin",
+  "user_id": "1"
+},
+{
+  "_id": {
+    "$oid": "66ce4444d443675474ffaed9"
+  },
+  "user_id": "2",
+  "name": "antonios",
+  "surname": "kreouzis",
+  "country": "Greece",
+  "town": "Galatsi",
+  "username": "kreouzis",
+  "password": "123",
+  "email": "kreouzis@gmail.com",
+  "address": "Olympou 15 - Chalandri",
+  "role": "user"
+}]

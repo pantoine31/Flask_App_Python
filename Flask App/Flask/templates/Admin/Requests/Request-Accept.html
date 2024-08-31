@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Σελίδα Αποδοχής Αιτημάτων</title>
+    <style>
+        /* Στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Ανοιχτό γκρι φόντο */
+            color: #212529; /* Σκούρο γκρι για κείμενο */
+        }
+
+        /* Στυλ για την navbar */
+        .navbar {
+            background-color: #343a40 !important; /* Σκούρο γκρι φόντο navbar */
+        }
+
+        /* Στυλ για τα στοιχεία της navbar */
+        .navbar-nav .nav-item {
+            margin-left: 15px; /* Απόσταση μεταξύ των στοιχείων */
+        }
+
+        /* Στυλ για τους συνδέσμους της navbar */
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important; /* Λευκό χρώμα για τους συνδέσμους */
+            font-size: 1rem; /* Μέγεθος γραμματοσειράς */
+            padding: 15px 20px; /* Απόσταση γύρω από το κείμενο */
+        }
+
+        /* Στυλ για την ενεργή κατάσταση του συνδέσμου */
+        .navbar-nav .nav-link.active {
+            background-color: #007bff; /* Μπλε χρώμα φόντου για την ενεργή κατάσταση */
+            border-radius: 5px; /* Στρογγυλεμένες γωνίες */
+        }
+
+        /* Στυλ για τα dropdowns */
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40; /* Σκούρο γκρι φόντο για το μενού */
+            border: none; /* Αφαίρεση συνόρων */
+        }
+
+        /* Στυλ για τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa; /* Λευκό χρώμα κειμένου */
+        }
+
+        /* Στυλ για το hover πάνω από τα στοιχεία του dropdown */
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057; /* Ελαφρώς πιο ανοιχτό γκρι χρώμα φόντου */
+        }
+
+        /* Στυλ για το κύριο τίτλο */
+        h2 {
+            text-align: center;
+            color: #007bff; /* Χρώμα τίτλου σε μπλε */
+            margin-top: 30px;
+            font-size: 2rem;
+        }
+
+        /* Ρυθμίσεις για το κεντρικό container */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff; /* Λευκό φόντο για τη φόρμα */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Στυλ για τις ετικέτες της φόρμας */
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        /* Στυλ για τα κουμπιά */
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            width: 100%; /* Πλήρες πλάτος */
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            width: 100%; /* Πλήρες πλάτος */
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Στυλ για τα πεδία εισαγωγής */
+        .form-control[readonly] {
+            background-color: #e9ecef; /* Ανοιχτό γκρι για τα readonly πεδία */
+            color: #495057; /* Σκούρο γκρι για το κείμενο */
+        }
+
+        /* Στυλ για το dropdown επιλογής ρόλου */
+        .form-control {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('adminlogin') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="100" height="80">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{ url_for('adminlogin') }}">Αρχική</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('getRequests') }}">Εγγραφές</a>
+                    </li>
+                    <li id="item" class="nav-item">
+                        <a class="nav-link" href="{{ url_for('getUserList', flag=0) }}">Χρήστες</a>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ανακοινώσεις & Προσφορές
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getAnnouncements') }}">Ανακοινώσεις</a>
+                            <a class="dropdown-item" href="{{ url_for('getOffers') }}">Προσφορές</a>
+                        </div>
+                    </li>
+                    <li id="item" class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Δομικά Στοιχεία
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ url_for('getTrainers') }}">Γυμναστές</a>
+                            <a class="dropdown-item" href="{{ url_for('getPrograms') }}">Υπηρεσίες</a>
+                            <a class="dropdown-item" href="{{ url_for('getClasses') }}">Πρόγραμμα Ομαδικών</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="fa fa-sign-out" style="font-size:24px"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Προβολή Αίτησης</h2>
+        <form action="{{ url_for('accept', email=req['email']) }}" method="post">
+            <div class="form-group">
+                <label for="name">Όνομα Χρήστη:</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ data[0]['name'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="surname">Επώνυμο χρήστη:</label>
+                <input type="text" class="form-control" id="surname" name="surname" value="{{ data[0]['surname'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email χρήστη:</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{ data[0]['email'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="country">Χώρα Κατοικίας χρήστη:</label>
+                <input type="text" class="form-control" id="country" name="country" value="{{ data[0]['country'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="town">Πόλη Κατοικίας χρήστη:</label>
+                <input type="text" class="form-control" id="town" name="town" value="{{ data[0]['town'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="address">Διεύθυνση Κατοικίας χρήστη:</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ data[0]['address'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ data[0]['username'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="text" class="form-control" id="password" name="password" value="{{ data[0]['password'] }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="role">Ρόλος χρήστη:</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="" hidden>Επιλέξτε ρόλο</option>
+                    <option value="user">Χρήστης</option>             
+                    <option value="admin">Διαχειριστής</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-success" value="Αποθήκευση Αλλαγών">
+                <a href="{{ url_for('getRequests') }}" class="btn btn-danger">Ακύρωση</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Navbar-Footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='Register-Page.css') }}">
+    <title>Σελίδα Εγγραφής</title>
+    <style>
+        /* Γενικό στυλ για το σώμα της σελίδας */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Στυλ για το header */
+        #header {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 10px 0;
+        }
+
+        #header img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Στυλ για τη navbar */
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .navbar-nav .dropdown-item {
+            color: #f8f9fa;
+        }
+
+        .navbar-nav .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        /* Στυλ για τα flash messages */
+        .flash-container {
+            margin: 20px;
+        }
+
+        .flash-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .flash-message.flash-warning {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Στυλ για τη φόρμα εγγραφής */
+        .form-group label {
+            font-size: 1.1rem;
+            color: #007bff;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            border-radius: 5px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            border-radius: 5px;
+        }
+
+        /* Στυλ για το footer */
+        .bottom_notes {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .bottom_notes img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .bottom_left, .bottom_right {
+            margin: 0;
+        }
+
+        .bottom_left p, .bottom_right p {
+            margin: 0;
+        }
+
+        /* Στυλ για το footer */
+        .bottom_notes {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('mainpage') }}">
+                <img id="logo" src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="EnerCharge" width="100" height="60">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('userlogin') }}">Σύνδεση</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('browse') }}">Υπηρεσίες</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('adminlogin') }}">Σύνδεση Διαχειριστή</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url_for('formregister') }}">Εγγραφή</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Εγγραφή Χρήστη</h2>
+        <form action="{{ url_for('register') }}" method="post">    
+            <div class="form-group">
+                <label for="name">Όνομα Χρήστη:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Επώνυμο Χρήστη:</label>
+                <input type="text" class="form-control" id="surname" name="surname" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Χρήστη:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="country">Χώρα Κατοικίας:</label>
+                <select class="form-control" id="country" name="country" required>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="town">Πόλη Κατοικίας:</label>
+                <select class="form-control" id="town" name="town" required>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="address">Διεύθυνση Κατοικίας:</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" name="wp-submit" id="wp-submit" class="btn btn-success" value="Δημιουργία Χρήστη">
+                <a href="{{ url_for('mainpage') }}" class="btn btn-danger">Ακύρωση</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Load all countries when page is loaded
+            loadCountries();
+    
+            // When Country changes load new cities
+            $('#country').change(function () {
+                loadCities($(this).val());
+            });
+    
+            // Function for loading Countries
+            function loadCountries() {
+                $.ajax({
+                    url: '/api/countries',
+                    method: 'GET',
+                    success: function (data) {
+                        $('#country').empty(); // Clear existing options
+                        $.each(data, function (key, value) {
+                            $('#country').append('<option value="' + String(value) + '">' + String(value) + '</option>');
+                        });
+                        loadCities($('#country').val()); // Load cities for the default selected country
+                    },
+                    error: function () {
+                        console.log('Error loading countries.');
+                    }
+                });
+            }
+    
+            // Function for loading Cities of specific country
+            function loadCities(country) {
+                $.ajax({
+                    url: '/api/cities/' + country,
+                    method: 'GET',
+                    success: function (data) {
+                        $('#town').empty(); // Clear existing options
+                        data.forEach(function (value) {
+                            $('#town').append('<option value="' + String(value) + '">' + String(value) + '</option>');
+                        });
+                    },
+                    error: function () {
+                        console.log('Error loading cities for country: ' + country);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer class="bottom_notes">
+        <div class="container text-center">
+            <a href="{{ url_for('mainpage') }}">
+                <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="80" height="30" style="background-color: transparent;">
+            </a>
+            <p>© Kreouzis Antonis - Kreouzis GYM. All rights reserved.</p>
+            <p>• Τηλέφωνο Επικοινωνίας: 69696969</p>
+            <p>• Email: info@kreouzis.gr</p>
+        </div>
+    </footer>
+</body>
+</html>

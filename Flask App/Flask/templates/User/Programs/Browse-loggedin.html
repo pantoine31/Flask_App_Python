@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Σελίδα προγραμμάτων</title>
+    <style>
+        h1 {
+            color: #000000;
+            text-align: center;
+        }
+
+        .program-entry {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+        }
+
+        .program-image {
+            float: left;
+            margin-right: 20px;
+        }
+
+        .program-details {
+            overflow: hidden;
+        }
+
+        .program-details strong {
+            color: #555;
+        }
+
+        .title {
+            font-size: 30px;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            background-color: #e5f212;
+            height: 48px;
+        }
+
+        .text {
+            font-size: 18px;
+            color: black;
+        }
+
+        textarea {
+            border: none;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+            white-space: nowrap;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3; /* Μπλε χρώμα για το hover εφέ */
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff; /* Μπλε χρώμα για το ενεργό στοιχείο */
+            color: #fff !important; /* Διασφαλίζει ότι το κείμενο παραμένει λευκό */
+        }
+
+        /* Footer styling */
+        .bottom_notes {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .bottom_notes .container {
+            max-width: 960px; /* Define maximum width of the footer */
+            margin: 0 auto; /* Center align the container */
+        }
+        
+        .bottom_notes a {
+            color: #f8f9fa;
+        }
+        
+        .bottom_notes a:hover {
+            text-decoration: underline;
+        }
+
+        .bottom_left, .bottom_right {
+            padding: 10px;
+        }
+        
+        .bottom_left {
+            text-align: center;
+        }
+        
+        .bottom_right {
+            text-align: center;
+        }
+
+        /* Header styling */
+        #header {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        #header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #header .logo img {
+            height: 60px;
+        }
+
+        #header .navbar {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .navbar-nav {
+            display: flex;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <div id="header">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('userlogin') }}">
+                    <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="EnerCharge" width="180">
+                </a>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogin' }}" href="{{ url_for('userlogin') }}">Αρχική</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userbrowse' }}" href="{{ url_for('userbrowse') }}">Υπηρεσίες</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'formBook' }}" href="{{ url_for('formBook') }}">Κράτηση</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'annBrowse' }}" href="{{ url_for('annBrowse') }}">Ανακοινώσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'offBrowse' }}" href="{{ url_for('offBrowse') }}">Προσφορές</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'myAppointments' }}" href="{{ url_for('myAppointments') }}">Κρατήσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'older' }}" href="{{ url_for('older') }}">Ιστορικό Κρατήσεων</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogout' }}" href="{{ url_for('userlogout') }}">Έξοδος</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container my-5">
+        <h1>Προγράμματα του Γυμναστηρίου μας</h1>
+
+        {% for entry in entries %}
+        <div class="program-entry mb-5">
+            <div class="program-details">
+                <div class="title mb-2">
+                    <p> {{ entry.get('name', 'N/A') }}</p><br>
+                </div>
+                <div class="text">
+                    <textarea name="text" id="text" cols="30" rows="13" style="height: 100%; width: 100%;" readonly>{{ entry.get('text', 'N/A') }}</textarea>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bottom_notes">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 bottom_left">
+                    <a href="{{ url_for('userlogin') }}">
+                        <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="80" height="30">
+                    </a>
+                    <br>
+                    <br>
+                    <p>© Kreouzis Antonis - Kreouzis GYM. All rights reserved.</p>					
+                    <p>• Τηλέφωνο Επικοινωνίας: 69696969</p>
+                    <p>• Email: info@kreouzis.gr</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

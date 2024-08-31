@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='Photos/Favicorn.jpg') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Main-Page.css') }}">
+    <title>Σελίδα κράτησης</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control, .form-group input[type="submit"] {
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .navbar {
+            background-color: #343a40;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            margin-right: auto;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .navbar-nav .nav-item {
+            margin: 0 10px;
+        }
+
+        .navbar-nav .nav-link {
+            color: #f8f9fa !important;
+            font-size: 1rem;
+            padding: 15px 20px;
+            white-space: nowrap;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar-nav .nav-link.active {
+            background-color: #007bff;
+            color: #fff !important;
+        }
+
+        .bottom_notes {
+            background-color: #343a40;
+            color: #f8f9fa;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .bottom_notes .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        
+        .bottom_notes a {
+            color: #f8f9fa;
+        }
+        
+        .bottom_notes a:hover {
+            text-decoration: underline;
+        }
+
+        .welcome-section {
+            background-color: #e9ecef;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            color: #343a40;
+        }
+
+        .welcome-section p {
+            font-size: 1.25rem;
+            color: #495057;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="d-flex align-items-center justify-content-between bg-dark py-2">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="{{ url_for('userlogin') }}">
+                <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="EnerCharge" width="180" height="60">
+            </a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogin' }}" href="{{ url_for('userlogin') }}">Αρχική</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userbrowse' }}" href="{{ url_for('userbrowse') }}">Υπηρεσίες</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'formBook' }}" href="{{ url_for('formBook') }}">Κράτηση</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'annBrowse' }}" href="{{ url_for('annBrowse') }}">Ανακοινώσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'offBrowse' }}" href="{{ url_for('offBrowse') }}">Προσφορές</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'myAppointments' }}" href="{{ url_for('myAppointments') }}">Κρατήσεις</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'older' }}" href="{{ url_for('older') }}">Ιστορικό Κρατήσεων</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ 'active' if request.endpoint == 'userlogout' }}" href="{{ url_for('userlogout') }}">Έξοδος</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Book Appointment</h1>
+        <form action="{{ url_for('submit_appointment') }}" method="POST">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="class_name">Class Selected:</label>
+                    <input type="text" name="class_name" id="class_name" value="{{ class_name }}" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Enter Date (yyyy-mm-dd):</label>
+                    <input type="date" name="date" id="date" value="{{ date }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="times">Select Time:</label>
+                    <select name="times" id="times" class="form-control">
+                        {% if available_times and available_times|length > 0 %}
+                            {% for time in available_times %}
+                                <option value="{{ time }}">{{ time }}</option>
+                            {% endfor %}
+                        {% else %}
+                            <option>No available times</option>
+                        {% endif %}
+                    </select>
+                    
+                </div>
+                
+                
+                <div class="form-group">
+                    <input type="submit" value="Submit Appointment" class="btn btn-primary">
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="bottom_notes">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="{{ url_for('userlogin') }}">
+                        <img src="{{ url_for('static', filename='Photos/Logo.png') }}" alt="kreouzisGYM" width="80" height="30">
+                    </a>
+                    <br><br>
+                    <p>© 2013-2024 KreouzisGYM. All rights reserved.</p>					
+                    <p>• Τηλέφωνο Επικοινωνίας: 696969</p>
+                    <p>• Email: info@kreouzis.gr</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
